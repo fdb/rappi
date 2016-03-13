@@ -20,6 +20,10 @@ func handleIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index.html")
 }
 
+func handleTwitterIndex(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "twitter.html")
+}
+
 func handleMeerkatIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "meerkat.html")
 }
@@ -36,6 +40,19 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	http.HandleFunc("/", handleIndex)
+
+	// Twitter
+	twitterConsumerKey := os.Getenv("TWITTER_CONSUMER_KEY")
+	twitterConsumerSecret := os.Getenv("TWITTER_CONSUMER_SECRET")
+	twitterAccessToken := os.Getenv("TWITTER_ACCESS_TOKEN")
+	twitterAccessTokenSecret := os.Getenv("TWITTER_ACCESS_TOKEN_SECRET")
+	if twitterConsumerKey == "" || twitterConsumerSecret == "" || twitterAccessToken == "" || twitterAccessTokenSecret == "" {
+		log.Fatal("Twitter: check if TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET environement variables are set. Go to https://apps.twitter.com/ to obtain keys.")
+	}
+
+	initTwitter(twitterConsumerKey, twitterConsumerSecret, twitterAccessToken, twitterAccessTokenSecret)
+	http.HandleFunc("/twitter/", handleTwitterIndex)
+	http.HandleFunc("/twitter/search.json", handleTwitterSearch)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")

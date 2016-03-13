@@ -1,0 +1,21 @@
+{{define "title"}}Meerkat{{end}}
+{{define "body"}}
+<h1>Twitter</h1>
+<h2>Search</h2>
+<p>Search for a phrase or keyword on Twitter and return a list of tweets.</p>
+<h3>Request</h3>
+<pre>https://rappi.herokuapp.com/twitter/search.json?q=<strong>yoursearch</strong></pre>
+<h3>Response</h3>
+<pre>...</pre>
+<h3>Example</h3>
+<pre>
+  $.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=obama', function(tweets) {
+    // Add the tweets to the document.
+    for (var i = 0; i < tweets.length; i++) {
+      var p = document.createElement('p');
+      p.innerHTML = tweets[i].text;
+      document.body.appendChild(p);
+    }
+  });
+</pre>
+{{end}}
