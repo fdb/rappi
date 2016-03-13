@@ -34,12 +34,17 @@ func handleFlickrIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "flickr.html")
 }
 
+func handleImgurIndex(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "imgur.html")
+}
+
 func handleMeerkatIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "meerkat.html")
 }
 
 var flickrKey string
 var meerkatKey string
+var imgurClientId string
 
 func main() {
 	port := os.Getenv("PORT")
@@ -71,6 +76,14 @@ func main() {
 	}
 	http.HandleFunc("/flickr/", handleFlickrIndex)
 	http.HandleFunc("/flickr/search.json", handleFlickrSearch)
+
+	// Imgur
+	imgurClientId = os.Getenv("IMGUR_CLIENT_ID")
+	if imgurClientId == "" {
+		log.Fatal("Imgur: no IMGUR_CLIENT_ID environment variable found. Obtain API key here: https://api.imgur.com/oauth2/addclient")
+	}
+	http.HandleFunc("/imgur/", handleImgurIndex)
+	http.HandleFunc("/imgur/search.json", handleImgurSearch)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")
