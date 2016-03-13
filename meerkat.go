@@ -64,6 +64,7 @@ func getBroadcasts() ([]Broadcast, error) {
 }
 
 func handleMeerkatBroadcasts(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	broadcasts, err := getBroadcasts()
 	if err != nil {
 		jsonError(w, err)

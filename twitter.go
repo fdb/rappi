@@ -38,6 +38,7 @@ func twitterStatusUrl(status anaconda.Tweet) string {
 }
 
 func handleTwitterSearch(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	query := r.FormValue("q")
 	searchResult, err := twitterApi.GetSearch(query, nil)
 	if err != nil {
