@@ -1,0 +1,83 @@
+{{define "title"}}Imgur{{end}}
+{{define "body"}}
+<h1>Imgur</h1>
+<h2>Search</h2>
+<p>Search for a phrase or keyword on <a href="https://www.imgur.com/">Imgur</a> and return a list of photos.</p>
+<h3>Request</h3>
+<pre>https://rappi.herokuapp.com/imgur/search.json?q=<strong>yourquery</strong></pre>
+<h3>Response</h3>
+<pre>
+{
+  status: "ok",
+  photos: [
+    {
+      id: "pC43VZr",
+      title: "Flower Pot",
+      description: "Flower Pot",
+      datetime: 1457882475,
+      imageUrl: "http://i.imgur.com/pC43VZr.jpg",
+      userHandle: "NileshSathwara"
+    },
+    {
+      id: "c57O8ko",
+      title: "Topical Flower Image",
+      description: "",
+      datetime: 1457858979,
+      imageUrl: "http://i.imgur.com/c57O8ko.jpg",
+      userHandle: "NileshSathwara"
+    },
+    {
+      id: "M2BdR",
+      title: "Flower Bombs",
+      description: "",
+      datetime: 1457858968,
+      imageUrl: "http://imgur.com/a/M2BdR",
+      userHandle: "emirbytes"
+    }
+  ]
+}
+</pre>
+<h3>Example</h3>
+<pre>
+$.getJSON('https://rappi.herokuapp.com/imgur/search.json?q=flower', function(result) {
+  if (result.status !== 'ok') {
+    alert(result.message);
+  }
+  // Add the photos to the document.
+  for (var i = 0; i < result.photos.length; i++) {
+    var img = document.createElement('img');
+    img.src = result.photos[i].imageUrl;
+    img.width = 300;
+    document.body.appendChild(img);
+  }
+});
+</pre>
+{{end}}
+
+{
+status: "ok",
+photos: [
+{
+id: "pC43VZr",
+title: "Flower Pot",
+description: "Flower Pot",
+datetime: 1457882475,
+imageUrl: "http://i.imgur.com/pC43VZr.jpg",
+userHandle: "NileshSathwara"
+},
+{
+id: "c57O8ko",
+title: "Topical Flower Image",
+description: "",
+datetime: 1457858979,
+imageUrl: "http://i.imgur.com/c57O8ko.jpg",
+userHandle: "NileshSathwara"
+},
+{
+id: "M2BdR",
+title: "Flower Bombs",
+description: "",
+datetime: 1457858968,
+imageUrl: "http://imgur.com/a/M2BdR",
+userHandle: "emirbytes"
+},
