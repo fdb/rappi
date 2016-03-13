@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/ChimeraCoder/anaconda"
 )
@@ -26,11 +25,6 @@ type TwitterOk struct {
 	Tweets []TwitterStatus `json:"tweets"`
 }
 
-type TwitterError struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-}
-
 var twitterApi *anaconda.TwitterApi
 
 func initTwitter(consumerKey, consumerSecret, accessToken, accessTokenSecret string) {
@@ -41,11 +35,6 @@ func initTwitter(consumerKey, consumerSecret, accessToken, accessTokenSecret str
 
 func twitterStatusUrl(status anaconda.Tweet) string {
 	return fmt.Sprintf("https://twitter.com/%s/status/%s", status.User.ScreenName, status.IdStr)
-}
-
-func jsonError(w http.ResponseWriter, err error) {
-	errorString := fmt.Sprintf("%v", err)
-	fmt.Fprintf(w, `{"status":"error","message":%s}`, strconv.Quote(errorString))
 }
 
 func handleTwitterSearch(w http.ResponseWriter, r *http.Request) {

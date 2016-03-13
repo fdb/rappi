@@ -8,35 +8,41 @@
 <pre>https://rappi.herokuapp.com/meerkat/broadcasts.json</pre>
 <h3>Response</h3>
 <pre>
-  [
-    {
-      "Url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
-      "Caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
-      "Location":"Lake Grove",
-      "WatchersCount":614,
-      "CommentsCount":2239
-    },
-    {
-      "Url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
-      "Caption":"Replays 24/7",
-      "Location":"",
-      "WatchersCount":44,
-      "CommentsCount":162
-    },
-    {
-      "Url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
-      "Caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
-      "Location":"",
-      "WatchersCount":16,
-      "CommentsCount":136
-    }
-  ]
+  {
+    "status": "ok",
+    "broadcasts": [
+      {
+        "Url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
+        "Caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
+        "Location":"Lake Grove",
+        "WatchersCount":614,
+        "CommentsCount":2239
+      },
+      {
+        "Url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
+        "Caption":"Replays 24/7",
+        "Location":"",
+        "WatchersCount":44,
+        "CommentsCount":162
+      },
+      {
+        "Url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
+        "Caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
+        "Location":"",
+        "WatchersCount":16,
+        "CommentsCount":136
+      }
+    ]
+  }
 </pre>
 <h3>Example</h3>
 <pre>
-  $.getJSON('https://rappi.herokuapp.com/meerkat/broadcasts.json', function(broadcasts) {
+  $.getJSON('https://rappi.herokuapp.com/meerkat/broadcasts.json', function(result) {
+    if (result.status !== 'ok') {
+      alert(result.message);
+    }
     // Show the first broadcast in an external window.
-    var b = broadcasts[0];
+    var b = result.broadcasts[0];
     window.open(b.Url, '_blank', 'width=300,height=600');
   });
 </pre>

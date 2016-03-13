@@ -6,8 +6,14 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strconv"
 	"text/template"
 )
+
+func jsonError(w http.ResponseWriter, err error) {
+	errorString := fmt.Sprintf("%v", err)
+	fmt.Fprintf(w, `{"status":"error","message":%s}`, strconv.Quote(errorString))
+}
 
 func renderTemplate(w http.ResponseWriter, name string) {
 	lp := path.Join("templates", "_base.html")

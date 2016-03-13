@@ -24,11 +24,16 @@ type Broadcast struct {
 }
 
 type CompactBroadcast struct {
-	Url           string
-	Caption       string
-	Location      string
-	WatchersCount int
-	CommentsCount int
+	Url           string `json:"url"`
+	Caption       string `json:"caption"`
+	Location      string `json:"location"`
+	WatchersCount int    `json:"watchersCount"`
+	CommentsCount int    `json:"commentsCount"`
+}
+
+type MeerkatOk struct {
+	Status     string             `json:"status"`
+	Broadcasts []CompactBroadcast `json:"broadcasts"`
 }
 
 type Result struct {
@@ -61,7 +66,7 @@ func getBroadcasts() ([]Broadcast, error) {
 func handleMeerkatBroadcasts(w http.ResponseWriter, r *http.Request) {
 	broadcasts, err := getBroadcasts()
 	if err != nil {
-		fmt.Fprintf(w, "Error %v", err)
+		jsonError(w, err)
 		return
 	}
 	var cbs []CompactBroadcast
@@ -71,9 +76,9 @@ func handleMeerkatBroadcasts(w http.ResponseWriter, r *http.Request) {
 		cb := CompactBroadcast{Url: url, Caption: b.Caption, Location: b.Location, WatchersCount: b.WatchersCount, CommentsCount: b.CommentsCount}
 		cbs = append(cbs, cb)
 	}
-	b, err := json.Marshal(cbs)
+	b, err := json.Marshal(MeerkatOk{Status: "ok", Broadcasts: cbs})
 	if err != nil {
-		fmt.Fprintf(w, "JSON Error %v", err)
+		jsonError(w, err)
 		return
 	}
 	fmt.Fprintf(w, "%s", b)
