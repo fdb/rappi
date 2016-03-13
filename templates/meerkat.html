@@ -3,47 +3,47 @@
 <h1>Meerkat</h1>
 
 <h2>Broadcasts</h2>
-<p>Fetch a list of current broadcasts on Meerkat. The <code>url</code> can be used to open a Meerkat window.</p>
+<p>Fetch a list of current broadcasts on <a href="https://meerkatapp.co/">Meerkat</a>. The <code>url</code> can be used to open a Meerkat window.</p>
 <h3>Request</h3>
 <pre>https://rappi.herokuapp.com/meerkat/broadcasts.json</pre>
 <h3>Response</h3>
 <pre>
-  {
-    "status": "ok",
-    "broadcasts": [
-      {
-        "url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
-        "caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
-        "location":"Lake Grove",
-        "watchersCount":614,
-        "commentsCount":2239
-      },
-      {
-        "url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
-        "caption":"Replays 24/7",
-        "location":"",
-        "watchersCount":44,
-        "commentsCount":162
-      },
-      {
-        "url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
-        "caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
-        "location":"",
-        "watchersCount":16,
-        "commentsCount":136
-      }
-    ]
-  }
+{
+  "status": "ok",
+  "broadcasts": [
+    {
+      "url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
+      "caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
+      "location":"Lake Grove",
+      "watchersCount":614,
+      "commentsCount":2239
+    },
+    {
+      "url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
+      "caption":"Replays 24/7",
+      "location":"",
+      "watchersCount":44,
+      "commentsCount":162
+    },
+    {
+      "url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
+      "caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
+      "location":"",
+      "watchersCount":16,
+      "commentsCount":136
+    }
+  ]
+}
 </pre>
 <h3>Example</h3>
 <pre>
-  $.getJSON('https://rappi.herokuapp.com/meerkat/broadcasts.json', function(result) {
-    if (result.status !== 'ok') {
-      alert(result.message);
-    }
-    // Show the first broadcast in an external window.
-    var b = result.broadcasts[0];
-    window.open(b.url, '_blank', 'width=300,height=600');
-  });
+$.getJSON('https://rappi.herokuapp.com/meerkat/broadcasts.json', function(result) {
+  if (result.status !== 'ok') {
+    alert(result.message);
+  }
+  // Show the first broadcast in an external window.
+  var b = result.broadcasts[0];
+  window.open(b.url, '_blank', 'width=300,height=600');
+});
 </pre>
 {{end}}

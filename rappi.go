@@ -30,10 +30,15 @@ func handleTwitterIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "twitter.html")
 }
 
+func handleFlickrIndex(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "flickr.html")
+}
+
 func handleMeerkatIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "meerkat.html")
 }
 
+var flickrKey string
 var meerkatKey string
 
 func main() {
@@ -55,10 +60,17 @@ func main() {
 	if twitterConsumerKey == "" || twitterConsumerSecret == "" || twitterAccessToken == "" || twitterAccessTokenSecret == "" {
 		log.Fatal("Twitter: check if TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET environement variables are set. Go to https://apps.twitter.com/ to obtain keys.")
 	}
-
 	initTwitter(twitterConsumerKey, twitterConsumerSecret, twitterAccessToken, twitterAccessTokenSecret)
 	http.HandleFunc("/twitter/", handleTwitterIndex)
 	http.HandleFunc("/twitter/search.json", handleTwitterSearch)
+
+	// Flickr
+	flickrKey = os.Getenv("FLICKR_KEY")
+	if flickrKey == "" {
+		log.Fatal("Flickr: no FLICKR_KEY environment variable found. Obtain API key here: https://www.flickr.com/services/api/keys/apply/")
+	}
+	http.HandleFunc("/flickr/", handleFlickrIndex)
+	http.HandleFunc("/flickr/search.json", handleFlickrSearch)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")

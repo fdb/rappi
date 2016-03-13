@@ -26,6 +26,13 @@ header a span {
   opacity: 0.4;
 }
 
+footer {
+  text-align: center;
+  font-size: 16px;
+  opacity: 0.4;
+  margin: 20px 0;
+}
+
 pre {
   padding: 10px 5px;
   background: #e7e7e7;

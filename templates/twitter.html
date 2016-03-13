@@ -1,8 +1,8 @@
-{{define "title"}}Meerkat{{end}}
+{{define "title"}}Twitter{{end}}
 {{define "body"}}
 <h1>Twitter</h1>
 <h2>Search</h2>
-<p>Search for a phrase or keyword on Twitter and return a list of tweets.</p>
+<p>Search for a phrase or keyword on <a href="https://twitter.com/">Twitter</a> and return a list of tweets.</p>
 <h3>Request</h3>
 <pre>https://rappi.herokuapp.com/twitter/search.json?q=<strong>yourquery</strong></pre>
 <h3>Response</h3>
@@ -39,16 +39,16 @@
 </pre>
 <h3>Example</h3>
 <pre>
-  $.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=sunshine', function(result) {
-    if (result.status !== 'ok') {
-      alert(result.message);
-    }
-    // Add the tweets to the document.
-    for (var i = 0; i < result.tweets.length; i++) {
-      var p = document.createElement('p');
-      p.innerHTML = result.tweets[i].text;
-      document.body.appendChild(p);
-    }
-  });
+$.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=sunshine', function(result) {
+  if (result.status !== 'ok') {
+    alert(result.message);
+  }
+  // Add the tweets to the document.
+  for (var i = 0; i < result.tweets.length; i++) {
+    var p = document.createElement('p');
+    p.innerHTML = result.tweets[i].text;
+    document.body.appendChild(p);
+  }
+});
 </pre>
 {{end}}
