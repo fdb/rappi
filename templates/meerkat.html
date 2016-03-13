@@ -3,7 +3,7 @@
 <h1>Meerkat</h1>
 
 <h2>Broadcasts</h2>
-<p>Fetch a list of current broadcasts on Meerkat. The <code>Url</code> can be used to open a Meerkat window.</p>
+<p>Fetch a list of current broadcasts on Meerkat. The <code>url</code> can be used to open a Meerkat window.</p>
 <h3>Request</h3>
 <pre>https://rappi.herokuapp.com/meerkat/broadcasts.json</pre>
 <h3>Response</h3>
@@ -12,25 +12,25 @@
     "status": "ok",
     "broadcasts": [
       {
-        "Url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
-        "Caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
-        "Location":"Lake Grove",
-        "WatchersCount":614,
-        "CommentsCount":2239
+        "url":"http://meerkatapp.co/iradiousa/333b13cb-28f1-4c86-b36c-97c45fabc253",
+        "caption":"WLINY #iRADIOUSA #music #news #talk #katch #nlmeerkast",
+        "location":"Lake Grove",
+        "watchersCount":614,
+        "commentsCount":2239
       },
       {
-        "Url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
-        "Caption":"Replays 24/7",
-        "Location":"",
-        "WatchersCount":44,
-        "CommentsCount":162
+        "url":"http://meerkatapp.co/badbeef/c2ee5421-6865-41b4-8b84-b2094ea246b8",
+        "caption":"Replays 24/7",
+        "location":"",
+        "watchersCount":44,
+        "commentsCount":162
       },
       {
-        "Url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
-        "Caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
-        "Location":"",
-        "WatchersCount":16,
-        "CommentsCount":136
+        "url":"http://meerkatapp.co/khalidabid/f018b076-de31-487a-bee7-6ce17c76709a",
+        "caption":"جپكه م تودي زاني شهه مي چئكريت خودي پتر حه شته دكه م دادئ",
+        "location":"",
+        "watchersCount":16,
+        "commentsCount":136
       }
     ]
   }
@@ -43,7 +43,7 @@
     }
     // Show the first broadcast in an external window.
     var b = result.broadcasts[0];
-    window.open(b.Url, '_blank', 'width=300,height=600');
+    window.open(b.url, '_blank', 'width=300,height=600');
   });
 </pre>
 {{end}}
