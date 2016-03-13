@@ -4,16 +4,49 @@
 <h2>Search</h2>
 <p>Search for a phrase or keyword on Twitter and return a list of tweets.</p>
 <h3>Request</h3>
-<pre>https://rappi.herokuapp.com/twitter/search.json?q=<strong>yoursearch</strong></pre>
+<pre>https://rappi.herokuapp.com/twitter/search.json?q=<strong>yourquery</strong></pre>
 <h3>Response</h3>
-<pre>...</pre>
+<pre>
+{
+  status: "ok",
+  tweets: [
+    {
+      url: "https://twitter.com/chloegill99/status/709010875101880320",
+      id: 709010875101880300,
+      createdAt: "Sun Mar 13 13:39:00 +0000 2016",
+      text: "Lovin this sunshine ✨☀️☀️",
+      userId: 514299448,
+      user: "chloegill99",
+      favoriteCount: 0,
+      retweetCount: 0,
+      imageUrls: []
+    },
+    {
+      url: "https://twitter.com/SSMaher86/status/709012827726548996",
+      id: 709012827726549000,
+      createdAt: "Sun Mar 13 13:46:45 +0000 2016",
+      text: "Sunshine in Brum on St.Patrick's Day Parade! https://t.co/P6mvwtijDR",
+      userId: 4850977115,
+      user: "SSMaher86",
+      favoriteCount: 0,
+      retweetCount: 0,
+      imageUrls: [
+        "https://pbs.twimg.com/media/CdbrY2lWEAEvhoU.jpg"
+      ]
+    }
+  ]
+}
+</pre>
 <h3>Example</h3>
 <pre>
-  $.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=obama', function(tweets) {
+  $.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=sunshine', function(result) {
+    if (result.status !== 'ok') {
+      alert(result.message);
+    }
     // Add the tweets to the document.
-    for (var i = 0; i < tweets.length; i++) {
+    for (var i = 0; i < result.tweets.length; i++) {
       var p = document.createElement('p');
-      p.innerHTML = tweets[i].text;
+      p.innerHTML = result.tweets[i].text;
       document.body.appendChild(p);
     }
   });
