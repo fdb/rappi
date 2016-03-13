@@ -1,0 +1,5 @@
+{
+	"ImportPath": "bitbucket.org/fdb/rappi",
+	"GoVersion": "go1.6",
+	"Deps": []
+}
