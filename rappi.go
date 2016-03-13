@@ -38,13 +38,18 @@ func handleImgurIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "imgur.html")
 }
 
+func handlePeriscopeIndex(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "periscope.html")
+}
+
 func handleMeerkatIndex(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "meerkat.html")
 }
 
 var flickrKey string
-var meerkatKey string
 var imgurClientId string
+var periscopeCookie string
+var meerkatKey string
 
 func main() {
 	port := os.Getenv("PORT")
@@ -84,6 +89,14 @@ func main() {
 	}
 	http.HandleFunc("/imgur/", handleImgurIndex)
 	http.HandleFunc("/imgur/search.json", handleImgurSearch)
+
+	// Periscope
+	periscopeCookie = os.Getenv("PERISCOPE_COOKIE")
+	if periscopeCookie == "" {
+		log.Fatal("Periscope: no PERISCOPE_COOKIE environment variable found.")
+	}
+	http.HandleFunc("/periscope/", handlePeriscopeIndex)
+	http.HandleFunc("/periscope/broadcasts.json", handlePeriscopeBroadcasts)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")

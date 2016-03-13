@@ -1,0 +1,66 @@
+{{define "title"}}Periscope{{end}}
+{{define "body"}}
+<h1>Meerkat</h1>
+<p><strong>Warning:</strong> this API is not complete yet. We can get a list of broadcasts, but not yet the full video streams.</p>
+
+<h2>Broadcasts</h2>
+<p>Fetch a list of current broadcasts on <a href="https://periscope.tv/">Periscope</a>.</p>
+<h3>Request</h3>
+<pre>https://rappi.herokuapp.com/periscope/broadcasts.json</pre>
+<h3>Response</h3>
+<pre>
+{
+  "status": "ok",
+  "broadcasts": [
+    {
+      id: "1mnGeZrVwBAJX",
+      createdAt: "2016-03-13T13:45:44.389334479-07:00",
+      updatedAt: "2016-03-13T13:47:26.554122613-07:00",
+      userId: "1mMKPyrvaWjGb",
+      userDisplayName: "Georgina",
+      username: "Craziee_g",
+      twitterUsername: "",
+      profileImageUrl: "https://prod-periscope-profile.s3-us-west-2.amazonaws.com/7af0a72361fb49f9e0c3b55a381240ba-1024.jpg",
+      state: "RUNNING",
+      language: "en",
+      start: "2016-03-13T13:45:56.276979940-07:00",
+      city: "London Borough of Waltham Forest",
+      country: "United Kingdom",
+      imageUrl: "https://tn.periscope.tv/_QFHRwRLkmOO9FrZxY8c_pq573dMZ4iXGDn87dyDHY7MOpsSVgHtb_p7oEjLeK7wOoaUAyZH4OYk6mEBIPO67w==/chunk_26.jpg?Expires=1773262058&Signature=e514cHKGp992pitFJo6~KpkwznZ3UtWYt3PxYQquKzCLagJgYViCYNwgRn~xYNuzq4vOgvv1fgPsQoz5lAcjPqYJGfkOx34V54GXXXUoL8zyru0v98j0Ek6iAhuKC-6HBDJuTWX~adufliGBh4--40AJBMVmlKzkFSUkpwgKhcdJnXiZuZmLt7fHHNwhB0SpJH7ZdBZy~Fw7Rr9kDZ6MeTshwiZTFM5iJcS8l70pAO5mBZDEh4PRQ90w~kO-xq~jcxBmaLOORMujLGF1QBa38oL1Y5N2h7dV6Nq8a4lfBAhxcVvCO6VKm~iX~KQf5dbHeIq8t-z0s88NbHUfizop0Q__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ",
+      status: "Is my sound working 🙄"
+    },
+    {
+      id: "1LyxBmRjkwPJN",
+      createdAt: "2016-03-13T13:45:53.741527427-07:00",
+      updatedAt: "2016-03-13T13:47:29.575520859-07:00",
+      userId: "1lZKpApZRGjnm",
+      userDisplayName: "IG//@cooksii",
+      username: "Cooks47",
+      twitterUsername: "",
+      profileImageUrl: "https://prod-periscope-profile.s3-us-west-2.amazonaws.com/c60aff9a2684cda49d21946798a0e9d7-767.jpg",
+      state: "RUNNING",
+      language: "en",
+      start: "2016-03-13T13:45:57.666091509-07:00",
+      city: "North Richland Hills",
+      country: "United States",
+      imageUrl: "https://tn.periscope.tv/xODS67E_4mcLpXLXRNdwjWUQn6G4JDnTxi1-2PhC-W5m7p46ARoNYK6MnAehexYGk9OVHMsVY6fyeCXUVauwAw==/chunk_28.jpg?Expires=1773262065&Signature=UHnm3p2VHb2NHlqElPsm~LMgzD6vESLiNghWOMSAcqiUdCeOD6-p~htbFUzTYc~lk2QQevcEJzasNWzzC-5XWkiOr45SbYVWwQPVPZNWj86Zld3tbjUOtiodEuBZPEALskh04gQHcKQ7W3T9jjuiqqLPN0BFw5-WZyDFmxDgvHDN81f5vCxfK7RRUPFHYy~2k-ftJJf-MzHqFvoLnbiCVTdNV4Gg-ifCKHu3l0LX5~qx88rITVvTLKsq-HeLau0j0IOiCt2h3tXAlezSq83cLQVYvi9aQcz~3YurcPk7g2b9Z31zuuSFnEdXHL0zWzJr6Hrv-1BOzDndvG0vq7ZERA__&Key-Pair-Id=APKAIHCXHHQVRTVSFRWQ",
+      status: "walking"
+    }
+  ]
+}
+</pre>
+<h3>Example</h3>
+<pre>
+$.getJSON('https://rappi.herokuapp.com/periscope/broadcasts.json', function(result) {
+  if (result.status !== 'ok') {
+    alert(result.message);
+  }
+  // Show thumbnails for all broadcasts.
+  for (var i = 0; i < result.broadcasts.length; i++) {
+    var img = document.createElement('img');
+    img.src = result.broadcasts[i].imageUrl;
+    document.body.appendChild(img);
+  }
+});
+</pre>
+{{end}}

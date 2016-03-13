@@ -38,4 +38,5 @@ pre {
   background: #e7e7e7;
   border-radius: 3px;
   color: #334;
+  overflow-x: auto;
 }
