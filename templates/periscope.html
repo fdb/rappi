@@ -1,7 +1,6 @@
 {{define "title"}}Periscope{{end}}
 {{define "body"}}
-<h1>Meerkat</h1>
-<p><strong>Warning:</strong> this API is not complete yet. We can get a list of broadcasts, but not yet the full video streams.</p>
+<h1>Periscope</h1>
 
 <h2>Broadcasts</h2>
 <p>Fetch a list of current broadcasts on <a href="https://periscope.tv/">Periscope</a>.</p>
@@ -61,6 +60,52 @@ $.getJSON('https://rappi.herokuapp.com/periscope/broadcasts.json', function(resu
     img.src = result.broadcasts[i].imageUrl;
     document.body.appendChild(img);
   }
+});
+</pre>
+
+<h2>Broadcast Details</h2>
+<p>Fetch the streaming / replay URL for a broadcast. Requires a <strong>broadcast id</strong>, e.g. <code>1LyxBmRjkwPJN</code>.</p>
+<h3>Request</h3>
+<pre>https://rappi.herokuapp.com/periscope/broadcastDetails.json?id=<strong>BROADCAST_ID</strong></pre>
+<h3>Response (live)</h3>
+<pre>
+{
+  status: "ok"
+  details: {
+    id: "1vOGwWAEyvgGB",
+    type: "replay",
+    streamingUrl: "",
+    replayUrl: "https://replay.periscope.tv/8TsjYUZ2LkXf4dIQjJYBH0xqwBkQK4_Iqji2cJE2dvZfE_NPk3-b0_a3opD9TWfmtUU58JsARbcWgh-l-d9kOA==/playlist.m3u8"
+  },
+}
+</pre>
+<h3>Response (replay)</h3>
+<pre>
+{
+  status: "ok"
+  details: {
+    id: "1mrGmDRyWwBKy",
+    type: "live",
+    streamingUrl: "http://periscope-prod-us-east-1.global.ssl.fastly.net/vidmanlive/YJWpgqwPkRmXrnPa.UuWFEjaYrmO-yIXI337hy5n8VcZEMjhMMbwr6TfyOsI9367mYlU85NdCeOK7HEpIbNQzpxAVab9yg1Q6OsBnnQ==/playlist.m3u8?t=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsInZlcnNpb24iOiIyIn0.eyJBbGxvd2VkUHJvdG9jb2xzIjpbImhscyJdLCJCcm9hZGNhc3RJZCI6IjFtckdtRFJ5V3dCS3kiLCJHcmFudFR5cGUiOiJyZWFkIiwiR3JhbnRlZEF0IjowLCJHcmFudGVkVG8iOiJQVUJMSUMiLCJleHAiOjg2NDAwfQ.ZBY09D-vCgHfOE78A8NzTcIT8q6WHkI1VORvkBZFZ-8",
+    replayUrl: ""
+  },
+}
+</pre>
+</pre>
+<h3>Example</h3>
+<pre>
+var broadcastId = '<strong>BROADCAST_ID</strong>';
+$.getJSON('https://rappi.herokuapp.com/periscope/broadcastDetails.json?id=' + broadcastId, function(result) {
+  if (result.status !== 'ok') {
+    alert(result.message);
+  }
+  if (result.details.type !== 'live') {
+    alert('Broadcast is no longer live.');
+  }
+  var video = document.createElement('video');
+  video.src = result.details.streamingUrl;
+  video.autoplay = true;
+  document.body.appendChild(video);
 });
 </pre>
 {{end}}
