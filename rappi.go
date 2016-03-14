@@ -97,6 +97,7 @@ func main() {
 	}
 	http.HandleFunc("/periscope/", handlePeriscopeIndex)
 	http.HandleFunc("/periscope/broadcasts.json", handlePeriscopeBroadcasts)
+	http.HandleFunc("/periscope/broadcastDetails.json", handlePeriscopeBroadcastDetails)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")

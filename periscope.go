@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -44,6 +45,20 @@ type BroadcastOut struct {
 	Status          string `json:"status"`
 }
 
+type BroadcastDetailsIn struct {
+	Id        string
+	Type      string
+	HlsUrl    string `json:"hls_url"`
+	ReplayUrl string `json:"replay_url"`
+}
+
+type BroadcastDetailsOut struct {
+	Id           string `json:"id"`
+	Type         string `json:"type"`
+	StreamingUrl string `json:"streamingUrl"`
+	ReplayUrl    string `json:"replayUrl"`
+}
+
 type PeriscopeOk struct {
 	Status     string         `json:"status"`
 	Broadcasts []BroadcastOut `json:"broadcasts"`
@@ -51,7 +66,6 @@ type PeriscopeOk struct {
 
 func periscopeGetBroadcasts() ([]BroadcastIn, error) {
 	var jsonStr = []byte(`{"cookie":"` + periscopeCookie + `"}`)
-	fmt.Println(string(jsonStr))
 	req, err := http.NewRequest("POST", "https://api.periscope.tv/api/v2/rankedBroadcastFeed", bytes.NewBuffer(jsonStr))
 	if err != nil {
 		return nil, err
@@ -63,18 +77,29 @@ func periscopeGetBroadcasts() ([]BroadcastIn, error) {
 		return nil, err
 	}
 	defer res.Body.Close()
-	//fmt.Println("response Status:", res.Status)
-	//fmt.Println("response Headers:", res.Header)
-
 	body, _ := ioutil.ReadAll(res.Body)
-	fmt.Println(string(body))
-	ioutil.WriteFile("/Users/fdb/Desktop/broadcasts.json", body, 0644)
 	var broadcasts []BroadcastIn
 	err = json.Unmarshal(body, &broadcasts)
 	if err != nil {
 		return nil, err
 	}
 	return broadcasts, nil
+}
+
+func periscopeGetBroadcastDetails(broadcastId string) (BroadcastDetailsIn, error) {
+	res, err := http.Get("https://api.periscope.tv/api/v2/getAccessPublic?broadcast_id=" + broadcastId)
+	if err != nil {
+		return BroadcastDetailsIn{}, err
+	}
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+	var details BroadcastDetailsIn
+	err = json.Unmarshal(body, &details)
+	if err != nil {
+		return BroadcastDetailsIn{}, err
+	}
+	return details, nil
 }
 
 func handlePeriscopeBroadcasts(w http.ResponseWriter, r *http.Request) {
@@ -112,4 +137,42 @@ func handlePeriscopeBroadcasts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "%s", b)
+}
+
+func handlePeriscopeBroadcastDetails(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	id := r.FormValue("id")
+	if id == "" {
+		jsonError(w, errors.New("A broadcast id is required."))
+		return
+	}
+	details, err := periscopeGetBroadcastDetails(id)
+	if err != nil {
+		jsonError(w, err)
+		return
+	}
+	var broadcastType string
+	if details.Type == "StreamTypeWeb" {
+		broadcastType = "live"
+	} else if details.Type == "StreamTypeReplay" {
+		broadcastType = "replay"
+	} else {
+		jsonError(w, errors.New("Broadcast not found."))
+		return
+	}
+	d := BroadcastDetailsOut{
+		Id:           id,
+		Type:         broadcastType,
+		StreamingUrl: details.HlsUrl,
+		ReplayUrl:    details.ReplayUrl,
+	}
+	enc := json.NewEncoder(w)
+	m := make(map[string]interface{})
+	m["status"] = "ok"
+	m["details"] = d
+	err = enc.Encode(m)
+	if err != nil {
+		jsonError(w, err)
+		return
+	}
 }
