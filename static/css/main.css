@@ -7,23 +7,37 @@ body {
 }
 
 header {
-  margin-top: 20px;
-  border-top: 1px solid #dde;
-  border-bottom: 1px solid #bbc;
-  background: #ccd;
-  color: #334;
-  padding: 5px 5px;
-  font-weight: bold;
-  border-radius: 5px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 header a {
   color: #334;
+  font-weight: bold;
   text-decoration: none;
+  padding: 10px;
+  transition: background 300ms;
+  border-radius: 2px;
+}
+
+header a:hover {
+  background: #ddd;
 }
 
 header a span {
   opacity: 0.4;
+}
+
+h1 {
+  font-weight: 200;
+  color: #444;
+}
+
+h2 {
+  font-weight: 200;
+  color: #666;
+  border-bottom: 1px solid #ddd;
 }
 
 footer {
@@ -39,4 +53,20 @@ pre {
   border-radius: 3px;
   color: #334;
   overflow-x: auto;
+}
+
+ul.services li {
+  font-size: 16px;
+  line-height: 2em;
+  color: #666;
+}
+
+ul.services li a {
+  text-decoration: none;
+  color: #666;
+  border-bottom: 1px solid #999;
+}
+
+ul.services li a:hover {
+  border-bottom-color: #333;
 }
