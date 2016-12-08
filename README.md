@@ -4,6 +4,7 @@ Proxy around popular APIs that avoids the authentication mess.
 
 Make sure you have a working Go environment set up, then use [gin](https://github.com/codegangsta/gin) for live reloading:
 
+    go install
     go get github.com/codegangsta/gin
     gin
 
