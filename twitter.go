@@ -18,6 +18,8 @@ type TwitterStatus struct {
 	UserHandle    string   `json:"user"`
 	FavoriteCount int      `json:"favoriteCount"`
 	RetweetCount  int      `json:"retweetCount"`
+	PlaceID       string   `json:"placeId"`
+	Place         string   `json:"place"`
 	Latitude      float64  `json:"latitude"`
 	Longitude     float64  `json:"longitude"`
 	ImageUrls     []string `json:"imageUrls"`
@@ -62,14 +64,27 @@ func handleTwitterSearch(w http.ResponseWriter, r *http.Request) {
 			Url:           twitterStatusUrl(status),
 			Id:            status.Id,
 			CreatedAt:     status.CreatedAt,
-			Text:          status.Text,
+			Text:          status.FullText,
 			UserId:        status.User.Id,
 			UserHandle:    status.User.ScreenName,
 			FavoriteCount: status.FavoriteCount,
 			RetweetCount:  status.RetweetCount,
+			PlaceID:       status.Place.ID,
+			Place:         status.Place.Name,
 		}
-		ts.Latitude, _ = status.Latitude()
-		ts.Longitude, _ = status.Longitude()
+		if status.HasCoordinates() {
+			ts.Latitude, _ = status.Latitude()
+			ts.Longitude, _ = status.Longitude()
+		} else if len(status.Place.ID) > 0 {
+			fmt.Printf("%v\n", status.Place.BoundingBox.Coordinates[0])
+			bbox := status.Place.BoundingBox.Coordinates[0]
+			if len(bbox) == 4 {
+				lon := (bbox[0][0] + bbox[1][0] + bbox[2][0] + bbox[3][0]) / 4.0
+				lat := (bbox[0][1] + bbox[1][1] + bbox[2][1] + bbox[3][1]) / 4.0
+				ts.Latitude = lon
+				ts.Longitude = lat
+			}
+		}
 		ts.ImageUrls = make([]string, 0)
 		for _, media := range status.Entities.Media {
 			ts.ImageUrls = append(ts.ImageUrls, media.Media_url_https)
