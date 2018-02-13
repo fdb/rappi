@@ -70,7 +70,7 @@ func doTwitterSearch(r *http.Request) (*TwitterSearchResult, error) {
 			Url:           twitterStatusUrl(status),
 			Id:            status.Id,
 			CreatedAt:     status.CreatedAt,
-			Text:          status.FullText,
+			Text:          status.Text,
 			UserId:        status.User.Id,
 			UserHandle:    status.User.ScreenName,
 			FavoriteCount: status.FavoriteCount,
