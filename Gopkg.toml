@@ -32,3 +32,8 @@
 [[constraint]]
   branch = "master"
   name = "github.com/codegangsta/gin"
+
+[metadata.heroku]
+  root-package = "bitbucket.org/fdb/rappi"
+  go-version = "1.9.4"
+  install = [ "./..." ]
