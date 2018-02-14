@@ -1,5 +1,7 @@
 Proxy around popular APIs that avoids the authentication mess.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## Development
 
 Make sure you have a working Go environment set up, then use [gin](https://github.com/codegangsta/gin) for live reloading:
