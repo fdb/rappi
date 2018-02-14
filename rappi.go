@@ -67,45 +67,50 @@ func main() {
 	twitterConsumerSecret := os.Getenv("TWITTER_CONSUMER_SECRET")
 	twitterAccessToken := os.Getenv("TWITTER_ACCESS_TOKEN")
 	twitterAccessTokenSecret := os.Getenv("TWITTER_ACCESS_TOKEN_SECRET")
-	if twitterConsumerKey == "" || twitterConsumerSecret == "" || twitterAccessToken == "" || twitterAccessTokenSecret == "" {
-		log.Fatal("Twitter: check if TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET environement variables are set. Go to https://apps.twitter.com/ to obtain keys.")
+	if len(twitterConsumerKey) > 0 && len(twitterConsumerSecret) > 0 && len(twitterAccessToken) > 0 && len(twitterAccessTokenSecret) > 0 {
+		initTwitter(twitterConsumerKey, twitterConsumerSecret, twitterAccessToken, twitterAccessTokenSecret)
+		http.HandleFunc("/twitter/", handleTwitterIndex)
+		http.HandleFunc("/twitter/search.json", handleTwitterSearch)
+	} else {
+		log.Println("Twitter: check if TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN and TWITTER_ACCESS_TOKEN_SECRET environement variables are set. Go to https://apps.twitter.com/ to obtain keys.")
 	}
-	initTwitter(twitterConsumerKey, twitterConsumerSecret, twitterAccessToken, twitterAccessTokenSecret)
-	http.HandleFunc("/twitter/", handleTwitterIndex)
-	http.HandleFunc("/twitter/search.json", handleTwitterSearch)
 
 	// Flickr
 	flickrKey = os.Getenv("FLICKR_KEY")
-	if flickrKey == "" {
-		log.Fatal("Flickr: no FLICKR_KEY environment variable found. Obtain API key here: https://www.flickr.com/services/api/keys/apply/")
+	if len(flickrKey) > 0 {
+		http.HandleFunc("/flickr/", handleFlickrIndex)
+		http.HandleFunc("/flickr/search.json", handleFlickrSearch)
+	} else {
+		log.Println("Flickr: no FLICKR_KEY environment variable found. Obtain API key here: https://www.flickr.com/services/api/keys/apply/")
 	}
-	http.HandleFunc("/flickr/", handleFlickrIndex)
-	http.HandleFunc("/flickr/search.json", handleFlickrSearch)
 
 	// Imgur
 	imgurClientId = os.Getenv("IMGUR_CLIENT_ID")
-	if imgurClientId == "" {
-		log.Fatal("Imgur: no IMGUR_CLIENT_ID environment variable found. Obtain API key here: https://api.imgur.com/oauth2/addclient")
+	if len(imgurClientId) > 0 {
+		http.HandleFunc("/imgur/", handleImgurIndex)
+		http.HandleFunc("/imgur/search.json", handleImgurSearch)
+	} else {
+		log.Println("Imgur: no IMGUR_CLIENT_ID environment variable found. Obtain API key here: https://api.imgur.com/oauth2/addclient")
 	}
-	http.HandleFunc("/imgur/", handleImgurIndex)
-	http.HandleFunc("/imgur/search.json", handleImgurSearch)
 
 	// Periscope
 	periscopeCookie = os.Getenv("PERISCOPE_COOKIE")
-	if periscopeCookie == "" {
-		log.Fatal("Periscope: no PERISCOPE_COOKIE environment variable found.")
+	if len(periscopeCookie) > 0  {
+		http.HandleFunc("/periscope/", handlePeriscopeIndex)
+		http.HandleFunc("/periscope/broadcasts.json", handlePeriscopeBroadcasts)
+		http.HandleFunc("/periscope/broadcastDetails.json", handlePeriscopeBroadcastDetails)
+	} else {
+		log.Println("Periscope: no PERISCOPE_COOKIE environment variable found.")
 	}
-	http.HandleFunc("/periscope/", handlePeriscopeIndex)
-	http.HandleFunc("/periscope/broadcasts.json", handlePeriscopeBroadcasts)
-	http.HandleFunc("/periscope/broadcastDetails.json", handlePeriscopeBroadcastDetails)
 
 	// Meerkat
 	meerkatKey = os.Getenv("MEERKAT_KEY")
-	if meerkatKey == "" {
-		log.Fatal("No $MEERKAT_KEY set.")
+	if len(meerkatKey) > 0 {
+		http.HandleFunc("/meerkat/", handleMeerkatIndex)
+		http.HandleFunc("/meerkat/broadcasts.json", handleMeerkatBroadcasts)
+	} else {
+		log.Println("No $MEERKAT_KEY set.")
 	}
-	http.HandleFunc("/meerkat/", handleMeerkatIndex)
-	http.HandleFunc("/meerkat/broadcasts.json", handleMeerkatBroadcasts)
 
 	fmt.Println("http://localhost:" + port + "/")
 	log.Fatal(http.ListenAndServe(":"+port, nil))
