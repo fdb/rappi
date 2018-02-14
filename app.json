@@ -1,0 +1,7 @@
+{
+  "name": "Rappi",
+  "description": "Proxy around popular APIs that avoids the authentication mess.",
+  "repository": "https://github.com/fdb/rappi",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["API", "Twitter", "Flickr", "Imgur", "Periscope", "Meerkat"]
+}
