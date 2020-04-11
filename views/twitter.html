@@ -1,5 +1,4 @@
-{{define "title"}}Twitter{{end}}
-{{define "body"}}
+<%- include("_header.html", { title: "Twitter" }) -%>
 <h1>Twitter</h1>
 <h2>Search</h2>
 <p>Search for a phrase or keyword on <a href="https://twitter.com/">Twitter</a> and return a list of tweets.</p>
@@ -51,4 +50,4 @@ $.getJSON('https://rappi.herokuapp.com/twitter/search.json?q=sunshine', function
   }
 });
 </pre>
-{{end}}
+<%- include("_footer.html") -%>

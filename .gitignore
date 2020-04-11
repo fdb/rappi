@@ -1,4 +1,4 @@
 .DS_Store
-/rappi
-/gin-bin
-vendor
+node_modules/
+.env
+

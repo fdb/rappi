@@ -1,5 +1,4 @@
-{{define "title"}}Flickr{{end}}
-{{define "body"}}
+<%- include("_header.html") -%>
 <h1>Flickr</h1>
 <h2>Search</h2>
 <p>Search for a phrase or keyword on <a href="https://www.flickr.com/">Flickr</a> and return a list of photos.</p>
@@ -45,4 +44,4 @@ $.getJSON('https://rappi.herokuapp.com/flickr/search.json?q=flower', function(re
   }
 });
 </pre>
-{{end}}
+<%- include("_footer.html") -%>

@@ -1,5 +1,4 @@
-{{define "title"}}Services{{end}}
-{{define "body"}}
+<%- include("_header.html", { title: "Services" }) -%>
 <h1>Services</h1>
 <ul class="services">
   <li><a href="/twitter/">Twitter</a></li>
@@ -8,4 +7,4 @@
   <li><a href="/periscope/">Periscope</a></li>
   <li><a href="/meerkat/">Meerkat</a></li>
 </ul>
-{{end}}
+<%- include("_footer.html") -%>

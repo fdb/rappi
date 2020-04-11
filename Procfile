@@ -1,1 +1,1 @@
-web: rappi
+web: npm start
